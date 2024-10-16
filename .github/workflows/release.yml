@@ -1,0 +1,125 @@
+name: Automated Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.14'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      #----------------------------------------------
+      #       load cached venv if cache exists
+      #----------------------------------------------
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      #----------------------------------------------
+      # install dependencies if cache does not exist
+      #----------------------------------------------
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      #----------------------------------------------
+      # install your root project, if required
+      #----------------------------------------------
+      - name: Install project
+        run: poetry install --no-interaction
+      #----------------------------------------------
+      #              run test suite
+      #----------------------------------------------
+      - name: Install pytest
+        run: poetry add --dev pytest coverage
+
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          poetry run pytest
+
+       # Configure git for committing version bump
+      - name: Configure git for committing version bump
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Bump version
+      - name: Bump version
+        id: bump_version
+        run: |
+          NEW_VERSION=$(poetry version patch | awk '{print $NF}')
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_ENV
+          git add pyproject.toml
+          git commit -m "Bump version to $NEW_VERSION"
+
+      - name: Push version bump
+        run: |
+          git push origin HEAD:main
+
+      # build the package after bumping version
+      - name: Build package
+        run: poetry build
+
+
+      - name: Delete existing tag (if any)
+        run: |
+          git tag -d v${{ env.new_version }} || true
+          git push origin :refs/tags/v${{ env.new_version }} || true
+
+      - name: Create and push new tag
+        run: |
+          git tag -a v${{ env.new_version }}  -m "Release v${{ env.new_version }}"
+          git push origin v${{ env.new_version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get install gh
+
+      - name: Create GitHub release
+        run: |
+          gh release create v${{ env.new_version }} --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Upload assets to release
+        run: |
+          gh release upload v${{ env.new_version }} dist/*.whl dist/*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Delete latest draft release
+      - name: Delete latest draft release
+        run: |
+          latest_release=$(gh release list --draft --limit 1 --json name,url | jq -r '.[0] | select(.name | test("^v[0-9]+\\.[0-9]+\\.[0-9]+(-\\w+)?")) | .url')
+          if [ -n "$latest_release" ]; then
+            gh release delete "$latest_release" -y
+          else
+            echo "No draft release found to delete."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

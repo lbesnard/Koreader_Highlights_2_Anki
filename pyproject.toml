@@ -31,8 +31,6 @@ coverage = "^7.5.3"
 pre-commit = "^3.7.1"
 poetry-pre-commit-plugin = "^0.1.2"
 
-
-
 [tool.pre_commit]
 version = "2.3.0"
 config = ".pre-commit-config.yaml"

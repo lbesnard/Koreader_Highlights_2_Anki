@@ -500,56 +500,6 @@ def parse_lua_highlights_bookmarks(filepath):
     return metadata
 
 
-# def parse_lua_highlights(filepath):
-# """
-# Parses a Lua file to extract highlighted bookmarks and book metadata.
-
-# Args:
-# filepath (str): Path to the Lua file.
-
-# Returns:
-# dict: Dictionary containing the highlighted bookmarks, book title, and author.
-# Returns None if no highlights are found.
-# """
-# # Create a Lua runtime environment
-# lua = LuaRuntime(unpack_returned_tuples=True)
-
-# # Load the Lua file content
-# with open(filepath, 'r', encoding='utf-8') as file:
-# lua_content = file.read()
-
-# # Evaluate the Lua content
-# lua_table = lua.execute(lua_content)
-
-# # Extract 'bookmarks' and filter for highlighted entries
-# bookmarks = lua_table['bookmarks']
-# highlighted_bookmarks = []
-# if bookmarks is None:
-# return None
-
-# for bookmark in bookmarks.values():
-# if bookmark['highlighted']:
-# highlighted_bookmarks.append({
-# 'chapter': bookmark['chapter'],
-# 'datetime': bookmark['datetime'],
-# 'notes': bookmark['notes'],
-# })
-
-# # Extract book metadata (authors, title)
-# metadata = {
-# 'title': lua_table['stats']['title'],
-# 'authors': lua_table['stats']['authors'],
-# 'language': lua_table['stats']['language'],
-# 'bookmarks': highlighted_bookmarks
-# }
-
-# # Return None if no highlighted bookmarks found
-# if not highlighted_bookmarks:
-# return None
-
-# return metadata
-
-
 def main():
     """
     Main function to scan directory for KOREADER metadata files and create Anki flashcards .
