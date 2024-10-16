@@ -1,0 +1,30 @@
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+  - pre-push
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-toml
+
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
+        #exclude: ^aodn_cloud_optimised/bin/create_aws_registry_dataset.py$  # issue with black!
+
+  - repo: https://github.com/python-poetry/poetry
+    rev: '1.8.3'
+    hooks:
+      - id: poetry-check
+        args: ["--lock", "--quiet"]  # Add --quiet to run poetry-check quietly
+        verbose: false
+      - id: poetry-lock
+        args: ["--no-update"]
+        verbose: true
+      - id: poetry-install
+        args: ["--quiet"]
