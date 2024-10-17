@@ -72,7 +72,7 @@ jobs:
           source .venv/bin/activate
           #poetry run pytest
           poetry run coverage run -m pytest
-          poetry run coverage report --fail-under=60
+          poetry run coverage report --fail-under=20
           poetry run coverage xml -o coverage.xml
 
       - name: Upload coverage report

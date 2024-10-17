@@ -78,6 +78,7 @@ def get_word_importance(sentence, language="en"):
 
     stop_words_dict = {
         "en-US": set(stopwords.words("english")),
+        "en": set(stopwords.words("english")),
         "fr": set(stopwords.words("french")),
         "de": set(stopwords.words("german")),
         "es": set(stopwords.words("spanish")),
@@ -110,6 +111,7 @@ def get_word_importance(sentence, language="en"):
         masked_index = (inputs.input_ids == tokenizer.mask_token_id).nonzero(
             as_tuple=True
         )[1]
+
         predicted_token_id = torch.argmax(predictions[0, masked_index, :], dim=-1)
 
         # Score based on the predicted token's probability
