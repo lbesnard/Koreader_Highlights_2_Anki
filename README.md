@@ -1,5 +1,8 @@
-# Koreader_Highlights_2_Anki
+# Koreader Highlights 2 Anki
 
+Generates [Anki](https://ankiweb.net/) flashcards from highlighted text in [KOReader](https://koreader.rocks/) to create cloze deletions.
+It utilizes the [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) model to assess word importance in sentences, allowing for the generation of effective
+flashcards for study and revision.
 
 ## Installation with Poetry
 Clone the repo
@@ -9,6 +12,10 @@ poetry install
 ```
 
 ### Usage
+
+1. Mount your Ebook reader
+2. Run the script
+3. import the APKG into ANKI
 
 ```bash
 poetry run koreader_highlights_2_anki -h
