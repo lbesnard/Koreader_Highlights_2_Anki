@@ -1,16 +1,20 @@
 import os
 import unittest
 
-from koreader_highlights_2_anki.__main__ import parse_lua_highlights_annotations, parse_lua_highlights_bookmarks
+from koreader_highlights_2_anki.__main__ import (
+    parse_lua_highlights_annotations,
+    parse_lua_highlights_bookmarks,
+)
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class TestParseLuaHighlightsAnnotations(unittest.TestCase):
-
     def test_parse_lua_highlights_annotations(self):
         # Define the path to the Lua file
-        filepath = os.path.join("Ali Abdaal - Feel-Good Productivity_ How to Do More of What Matters to You.sdr/metadata.epub.lua")
+        filepath = os.path.join(
+            "Ali Abdaal - Feel-Good Productivity_ How to Do More of What Matters to You.sdr/metadata.epub.lua"
+        )
         filepath = os.path.join(ROOT_DIR, "resources", filepath)
 
         # Call the function with the actual Lua file
@@ -22,16 +26,20 @@ class TestParseLuaHighlightsAnnotations(unittest.TestCase):
             "authors": "Abdaal, Ali",
             "language": "en-US",
             "entries": [
-                {'chapter': 'Introduction',
-                 'datetime': '2024-08-30 12:31:05',
-                 'notes': 'when we’re in a positive mood, we tend to consider a broader range '
-                          'of actions, be more open to new experiences, and better integrate '
-                          'the information we receive',
-                 'page': 14},
-                {'chapter': 'Introduction',
-                 'datetime': '2024-08-30 12:31:27',
-                 'notes': 'feeling good boosts our creativity –',
-                 'page': 15}
+                {
+                    "chapter": "Introduction",
+                    "datetime": "2024-08-30 12:31:05",
+                    "notes": "when we’re in a positive mood, we tend to consider a broader range "
+                    "of actions, be more open to new experiences, and better integrate "
+                    "the information we receive",
+                    "page": 14,
+                },
+                {
+                    "chapter": "Introduction",
+                    "datetime": "2024-08-30 12:31:27",
+                    "notes": "feeling good boosts our creativity –",
+                    "page": 15,
+                },
             ],
         }
 
@@ -43,7 +51,9 @@ class TestParseLuaHighlightsAnnotations(unittest.TestCase):
 
     def test_parse_lua_highlights_bookmarks(self):
         # Define the path to the Lua file
-        filepath = os.path.join("Wallace J. Nichols - Blue Mind_ How Water Makes You Happier_ More Connected and Better at What You Do.sdr/metadata.epub.lua")
+        filepath = os.path.join(
+            "Wallace J. Nichols - Blue Mind_ How Water Makes You Happier_ More Connected and Better at What You Do.sdr/metadata.epub.lua"
+        )
         filepath = os.path.join(ROOT_DIR, "resources", filepath)
 
         # Call the function with the actual Lua file
@@ -55,13 +65,15 @@ class TestParseLuaHighlightsAnnotations(unittest.TestCase):
             "authors": "Céline Cousteau\nWallace J. Nichols",
             "language": "en",
             "entries": [
-                {'chapter': '3. The Water Premium',
-                 'datetime': '2021-02-15 14:28:25',
-                 'notes': 'The factors that help boost Ryan Howell’s happiness for the longer '
-                          'term are the pursuit and attainment of personal goals and the '
-                          'adoption of meaningful activities. Suppose that Howell was '
-                          'planning',
-                 'page': '12'}
+                {
+                    "chapter": "3. The Water Premium",
+                    "datetime": "2021-02-15 14:28:25",
+                    "notes": "The factors that help boost Ryan Howell’s happiness for the longer "
+                    "term are the pursuit and attainment of personal goals and the "
+                    "adoption of meaningful activities. Suppose that Howell was "
+                    "planning",
+                    "page": "12",
+                }
             ],
         }
 
@@ -72,5 +84,5 @@ class TestParseLuaHighlightsAnnotations(unittest.TestCase):
         self.assertEqual(result["entries"], expected_metadata["entries"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
