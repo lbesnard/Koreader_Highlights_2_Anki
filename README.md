@@ -4,6 +4,12 @@ Generates [Anki](https://ankiweb.net/) flashcards from highlighted text in [KORe
 It utilizes the [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) model to assess word importance in sentences, allowing for the generation of effective
 flashcards for study and revision.
 
+## Installation
+
+```bash
+curl -s https://raw.githubusercontent.com/lbesnard/Koreader_Highlights_2_Anki/install.sh | bash
+```
+
 ## Installation with Poetry
 Clone the repo
 ```bash
@@ -11,14 +17,15 @@ pip install poetry
 poetry install
 ```
 
-### Usage
+## Usage
 
 1. Mount your Ebook reader
 2. Run the script
 3. import the APKG into ANKI
 
 ```bash
-poetry run koreader_highlights_2_anki -h
+# If installed from poetry, do `poetry run koreader_highlights_2_anki -h`
+koreader_highlights_2_anki -h
 usage: koreader_highlights_2_anki [-h] --input-folder INPUT_FOLDER --output-folder OUTPUT_FOLDER [--deck-name DECK_NAME] [--no-ai] [--select-files]
 
 Create Anki flashcards from Koreader highlights.
