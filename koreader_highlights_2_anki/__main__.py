@@ -541,6 +541,7 @@ def main():
     )
     parser.add_argument(
         "--select-files",
+        "-s",
         action="store_true",
         help="If set, allows you to select files interactively for processing.",
     )
@@ -551,7 +552,6 @@ def main():
         os.makedirs(args.output_folder)
         logger.info(f"Created output folder: {args.output_folder}")
 
-    nltk.download = lambda *args, **kwargs: None
 
     # Recursively find all metadata.epub.lua files in the input folder
     lua_files = []
@@ -564,6 +564,8 @@ def main():
     if not lua_files:
         logger.error("No metadata.*.lua files found in the input folder.")
         return
+    else:
+        nltk.download = lambda *args, **kwargs: None
 
     # If --select-files is passed, present a list for the user to select files
     if args.select_files:
