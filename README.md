@@ -41,3 +41,5 @@ poetry run koreader_highlights_2_anki -i /media/KOBOeReader/Ebooks -o ~/Document
 
 ## Example
 ![cloze1](test_koreader_highlights_2_anki/resources/Screenshot_20241019-093741_AnkiDroid.png)
+
+![cloze1](test_koreader_highlights_2_anki/resources/Screenshot_20241019-093748_AnkiDroid.png)
