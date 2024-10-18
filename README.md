@@ -7,7 +7,8 @@ flashcards for study and revision.
 ## Installation
 
 ```bash
-curl -s https://raw.githubusercontent.com/lbesnard/Koreader_Highlights_2_Anki/install.sh | bash
+curl -f
+https://raw.githubusercontent.com/lbesnard/Koreader_Highlights_2_Anki/refs/heads/main/install.sh | bash
 ```
 
 ## Installation with Poetry
