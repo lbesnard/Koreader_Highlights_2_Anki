@@ -87,7 +87,7 @@ jobs:
           rm -rf .venv/
           rm -rf tests/
           rm -rf coverage.xml
-          rm -rf dist/*.tar.gz  # Only keep the wheel if you don't need the source distribution
+          #rm -rf dist/*.tar.gz  # Only keep the wheel if you don't need the source distribution
           rm -rf build/
 
 
