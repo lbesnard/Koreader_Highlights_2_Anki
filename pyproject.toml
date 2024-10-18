@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "koreader_highlights_2_anki"
-version = "0.1.1"
+version = "0.1.2"
 description = "A script to create Anki flashcards from KOReader metadata highlights."
 authors = ["Your Name <your.email@example.com>"]
 license = "MIT"
