@@ -1,8 +1,8 @@
 # Koreader Highlights 2 Anki
 
 Generates [Anki](https://ankiweb.net/) flashcards from highlighted text in [KOReader](https://koreader.rocks/) to create cloze deletions.
-It utilizes the [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) model to assess word importance in sentences, allowing for the generation of effective
-flashcards for study and revision.
+It utilises the [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) model to assess word importance in sentences, allowing for the generation of effective
+flashcards.
 
 ## Installation
 
