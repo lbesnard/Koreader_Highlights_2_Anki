@@ -14,6 +14,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Clean up directories
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -81,14 +89,6 @@ jobs:
       # build the package after bumping version
       - name: Build package
         run: poetry build
-
-      - name: Clean up to free space
-        run: |
-          rm -rf .venv/
-          rm -rf tests/
-          rm -rf coverage.xml
-          #rm -rf dist/*.tar.gz  # Only keep the wheel if you don't need the source distribution
-          rm -rf build/
 
 
       - name: Delete existing tag (if any)
