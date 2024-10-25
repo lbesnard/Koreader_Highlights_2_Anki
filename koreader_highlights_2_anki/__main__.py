@@ -75,6 +75,7 @@ def get_word_importance(sentence, language="en"):
 
     # Download NLTK stopwords if you haven't already
     import nltk
+
     nltk.download("stopwords", quiet=True)
     from nltk.corpus import stopwords
 
@@ -554,7 +555,6 @@ def main():
         os.makedirs(args.output_folder)
         logger.info(f"Created output folder: {args.output_folder}")
 
-
     # Recursively find all metadata.epub.lua files in the input folder
     lua_files = []
     for root, _, files in os.walk(args.input_folder):
@@ -571,15 +571,15 @@ def main():
 
     # If --select-files is passed, present a list for the user to select files
     if args.select_files:
-#         questions = [
-            # inquirer.Checkbox(
-                # "selected_files",
-                # message="Select the files to process (use space to select, arrows to navigate):",
-                # choices=lua_files,
-            # )
+        #         questions = [
+        # inquirer.Checkbox(
+        # "selected_files",
+        # message="Select the files to process (use space to select, arrows to navigate):",
+        # choices=lua_files,
+        # )
         # ]
         # answers = inquirer.prompt(questions)
-#         selected_files = answers.get("selected_files", [])
+        #         selected_files = answers.get("selected_files", [])
         prompt_message = "Select the files to process with TAB (You can type characters of a book to filter out):"
         selected_files = list(iterfzf(lua_files, multi=True, prompt=prompt_message))
 
