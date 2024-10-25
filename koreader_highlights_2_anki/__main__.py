@@ -43,6 +43,7 @@ import genanki
 import inquirer
 import nltk
 import torch
+from iterfzf import iterfzf
 from lupa import LuaRuntime
 from tqdm import tqdm
 from transformers import BertTokenizer, BertForMaskedLM
@@ -73,6 +74,7 @@ def get_word_importance(sentence, language="en"):
     model = BertForMaskedLM.from_pretrained(model_name)
 
     # Download NLTK stopwords if you haven't already
+    import nltk
     nltk.download("stopwords", quiet=True)
     from nltk.corpus import stopwords
 
@@ -569,15 +571,18 @@ def main():
 
     # If --select-files is passed, present a list for the user to select files
     if args.select_files:
-        questions = [
-            inquirer.Checkbox(
-                "selected_files",
-                message="Select the files to process (use space to select, arrows to navigate):",
-                choices=lua_files,
-            )
-        ]
-        answers = inquirer.prompt(questions)
-        selected_files = answers.get("selected_files", [])
+#         questions = [
+            # inquirer.Checkbox(
+                # "selected_files",
+                # message="Select the files to process (use space to select, arrows to navigate):",
+                # choices=lua_files,
+            # )
+        # ]
+        # answers = inquirer.prompt(questions)
+#         selected_files = answers.get("selected_files", [])
+        prompt_message = "Select the files to process with TAB (You can type characters of a book to filter out):"
+        selected_files = list(iterfzf(lua_files, multi=True, prompt=prompt_message))
+
     else:
         selected_files = lua_files
 
