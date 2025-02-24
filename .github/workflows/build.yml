@@ -2,9 +2,9 @@ name: package build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-linux:
@@ -12,9 +12,9 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - '3.10.14'
-          - '3.11.9'
-          - '3.12.4'
+          - "3.10.14"
+          - "3.11.9"
+          - "3.12.4"
 
     defaults:
       run:
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: 'true'
+          submodules: "true"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -76,9 +76,9 @@ jobs:
           poetry run coverage xml -o coverage.xml
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-report-${{ github.job }}-${{ github.run_number }}
+          name: coverage-report-${{ github.job }}-${{ github.run_number }}-${{ matrix.python-version }}
           path: coverage.xml
 
       - name: Build package
